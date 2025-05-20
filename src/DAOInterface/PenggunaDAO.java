@@ -1,0 +1,16 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package DAOInterface;
+import Model.Pengguna;
+
+/**
+ *
+ * @author gangs
+ */
+public interface PenggunaDAO {
+    public Pengguna login(String username, String password);
+    public boolean register(Pengguna pengguna);
+    public boolean checkUsername(String username);
+}

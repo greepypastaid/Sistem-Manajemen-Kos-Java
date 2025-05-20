@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  *
  * @author gangs
  */
-public class LoginInterface extends javax.swing.JFrame {
+public class RegisterInterface extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginInterface
      */
-    public LoginInterface() {
+    public RegisterInterface() {
         initComponents();
     }
 
@@ -36,13 +36,12 @@ public class LoginInterface extends javax.swing.JFrame {
         txtUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
-        Login = new javax.swing.JButton();
-        Register = new javax.swing.JButton();
+        Daftar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Halaman Login");
+        jLabel1.setText("Halaman Daftar");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Username");
@@ -64,17 +63,10 @@ public class LoginInterface extends javax.swing.JFrame {
             }
         });
 
-        Login.setText("Masuk");
-        Login.addActionListener(new java.awt.event.ActionListener() {
+        Daftar.setText("Daftar");
+        Daftar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginActionPerformed(evt);
-            }
-        });
-
-        Register.setText("Belum punya akun?");
-        Register.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisterActionPerformed(evt);
+                DaftarActionPerformed(evt);
             }
         });
 
@@ -88,21 +80,21 @@ public class LoginInterface extends javax.swing.JFrame {
                         .addGap(238, 238, 238)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Register, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(284, 284, 284)
+                                .addComponent(Daftar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(125, 125, 125)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 128, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -120,9 +112,7 @@ public class LoginInterface extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Login)
-                    .addComponent(Register))
+                .addComponent(Daftar)
                 .addGap(65, 65, 65))
         );
 
@@ -138,11 +128,13 @@ public class LoginInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
-    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
+    private void DaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DaftarActionPerformed
         if (txtUsername.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Please fill out username");
+            JOptionPane.showMessageDialog(null, "Please fill out username");
+            return;
         } else if (String.valueOf(txtPassword.getPassword()).equals("")) {
-        JOptionPane.showMessageDialog(null, "Please fill out password");
+            JOptionPane.showMessageDialog(null, "Please fill out password");
+            return;
         }
         
         // Ambil nilai dari form
@@ -151,32 +143,31 @@ public class LoginInterface extends javax.swing.JFrame {
 
         // Cek ke database
         PenggunaDAO penggunaDAO = new PenggunaDAOImplements() {};
-        Pengguna pengguna = penggunaDAO.login(username, password);
-
-        if (pengguna != null) {
-            // Login berhasil
-            JOptionPane.showMessageDialog(null, "Login berhasil sebagai " + pengguna.getRole());
-
-            // Buka form utama sesuai role
-            if ("admin".equals(pengguna.getRole())) {
-                // Buka form admin
-                new InterfaceUtama().setVisible(true);
-                dispose(); // Tutup form login
-            } else {
-                // Buka form user biasa
-                new InterfaceUtama().setVisible(true);
-                dispose(); // Tutup form login
-            }
-        } else {
-            // Login gagal
-            JOptionPane.showMessageDialog(null, "Username atau password salah!");
+        
+        if (penggunaDAO.checkUsername(username)) {
+            JOptionPane.showMessageDialog(this, "Username sudah digunakan!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    }//GEN-LAST:event_LoginActionPerformed
-
-    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
-        new RegisterInterface().setVisible(true);
-        dispose(); // Tutup form login
-    }//GEN-LAST:event_RegisterActionPerformed
+        
+        // Buat objek pengguna baru
+        Pengguna pengguna = new Pengguna();
+        pengguna.setUsername(username);
+        pengguna.setPassword(password);
+        pengguna.setRole("user"); // Set default role sebagai user
+        
+        // Simpan ke database
+        boolean success = penggunaDAO.register(pengguna);
+        
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            // Kembali ke form login
+            LoginInterface login = new LoginInterface();
+            login.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Registrasi gagal! Silakan coba lagi.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_DaftarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,27 +186,27 @@ public class LoginInterface extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginInterface().setVisible(true);
+                new RegisterInterface().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Login;
-    private javax.swing.JButton Register;
+    private javax.swing.JButton Daftar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

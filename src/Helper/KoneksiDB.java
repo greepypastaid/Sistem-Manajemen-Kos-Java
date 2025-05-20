@@ -14,9 +14,9 @@ public class KoneksiDB {
     public static Connection getConnection(){
         if (con== null){
             MysqlDataSource data=new MysqlDataSource();
-            data.setDatabaseName("NamaDb");
+            data.setDatabaseName("db_koskontrakan");
             data.setUser("root");
-            data.setPassword("");
+            data.setPassword("@Bull12345");
             try{
                 con=data.getConnection();
                 System.out.println("koneksi berhasil");
