@@ -72,23 +72,31 @@ public class KamarDAOImplements implements KamarDAO {
         return listKamar;
     }
     
-    public boolean checkNomorKamar(String nomor_kamar) {
-        String sql = "SELECT * FROM kamar WHERE nomor_kamar = ?";
+    public List<Kamar> getKamarByNomor(String nomor_kamar) {
+        List<Kamar> listKamar = new ArrayList<>();
+        String sql = "SELECT * FROM kamar WHERE nomor_kamar LIKE ?";
         
         try {
             PreparedStatement ps = koneksi.prepareStatement(sql);
-            ps.setString(1, nomor_kamar);
+            ps.setString(1, "%" + nomor_kamar + "%");
             ResultSet rs = ps.executeQuery();
             
-            boolean exists = rs.next();
+            while (rs.next()) {
+                Kamar kamar = new Kamar();
+                kamar.setId_kamar(rs.getInt("id_kamar"));
+                kamar.setNomor_kamar(rs.getString("nomor_kamar"));
+                kamar.setTipe(rs.getString("tipe"));
+                kamar.setHarga(rs.getInt("harga"));
+                kamar.setStatus(rs.getString("status"));
+                listKamar.add(kamar);
+            }
             
             rs.close();
             ps.close();
-            
-            return exists;
         } catch (SQLException e) {
-            System.out.println("Error saat cek nomor kamar: " + e.getMessage());
-            return false;
+            System.out.println("Error saat mencari kamar: " + e.getMessage());
         }
+        
+        return listKamar;
     }
 }

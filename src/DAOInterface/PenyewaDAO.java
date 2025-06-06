@@ -4,15 +4,15 @@
  */
 package DAOInterface;
 
-import Model.Kamar;
+import Model.Penyewa;
 import java.util.List;
 
 /**
  *
  * @author gangs
  */
-public interface KamarDAO {
-    public void create(Kamar kamar);
-    public List<Kamar> readAll();
-    public List<Kamar> getKamarByNomor(String nomor_kamar);
+public interface PenyewaDAO {
+    public void create(Penyewa penyewa);
+    public List<Penyewa> readAll();
+    public List<Penyewa> getPenyewaByName(String nama_penyewa);
 }

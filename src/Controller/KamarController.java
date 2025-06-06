@@ -7,6 +7,7 @@ package Controller;
 import DAO.KamarDAOImplements;
 import DAOInterface.KamarDAO;
 import Model.Kamar;
+import Model.Penyewa;
 import Model.TabelModelKamar;
 import View.HalamanAdmin;
 import java.util.List;
@@ -31,7 +32,11 @@ public class KamarController {
     public void isiTable() {
         kamar = implKamar.readAll();
         TabelModelKamar tmk = new TabelModelKamar(kamar);
-        frame.getTableData().setModel(tmk);
+        frame.getTableDataKamar().setModel(tmk);
+    }
+    
+    public void loadKamarComboBox() {
+        List<Kamar> kamarList = implKamar.readAll();
     }
     
     public void insert() {
@@ -60,7 +65,8 @@ public class KamarController {
             kamar.setStatus(frame.getLsStatus().getSelectedItem().toString());
             
             // Cek apakah nomor kamar sudah ada
-            if (implKamar.checkNomorKamar(kamar.getNomor_kamar())) {
+            List<Kamar> existingKamar = implKamar.getKamarByNomor(kamar.getNomor_kamar());
+            if (!existingKamar.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Nomor kamar sudah ada!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -75,14 +81,28 @@ public class KamarController {
         }
     }
     
-        public void reset() {
+    public void reset() {
         frame.getTxtIDKamar().setText("");
         frame.getTxtNomorKamar().setText("");
-        frame.getLsTipeKamar().setSelectedIndex(0);  // Gunakan setSelectedIndex(0) bukan setSelectedItem("")
+        frame.getLsTipeKamar().setSelectedIndex(0);
         frame.getTxtHarga().setText("");
         frame.getLsStatus().setSelectedIndex(0);
         
         // Refresh tabel setelah reset
         isiTable();
+    }
+    
+    public void cariKamar() {
+        if (!frame.getTxtCariKamar().getText().trim().isEmpty()) {
+            isiTableCariNama();
+        } else {
+            JOptionPane.showMessageDialog(frame, "SILAHKAN MASUKKAN NOMOR KAMAR");
+        }
+    }
+    
+    public void isiTableCariNama() {
+        kamar = implKamar.getKamarByNomor(frame.getTxtCariKamar().getText());
+        TabelModelKamar tmk = new TabelModelKamar(kamar);
+        frame.getTableDataKamar().setModel(tmk);
     }
 }
