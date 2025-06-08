@@ -51,14 +51,6 @@ public class PenyewaController {
             penyewa.setAlamat(frame.getAlamat().getText());
             penyewa.setKamar(frame.getKamar().getText());
             
-            
-            // // Cek apakah nomor penyewa sudah ada
-            // List<Penyewa> existingPenyewa = implPenyewa.getPenyewaByNomor(penyewa.getNama_penyewa());
-            // if (!existingPenyewa.isEmpty()) {
-            //     JOptionPane.showMessageDialog(frame, "Nomor penyewa sudah ada!", "Error", JOptionPane.ERROR_MESSAGE);
-            //     return;
-            // }
-            
             implPenyewa.create(penyewa);
             JOptionPane.showMessageDialog(null, "Data penyewa berhasil disimpan");
             

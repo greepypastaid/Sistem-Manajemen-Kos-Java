@@ -13,7 +13,6 @@ import javax.swing.table.AbstractTableModel;
 public class TabelModelKamar extends AbstractTableModel {
     List<Kamar> kamar;
     
-        
     public TabelModelKamar(List<Kamar> kamar) {
         this.kamar = kamar;
     }

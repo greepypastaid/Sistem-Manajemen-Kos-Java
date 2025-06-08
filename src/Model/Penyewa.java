@@ -84,4 +84,9 @@ public class Penyewa {
     public void setKamar(String kamar) {
         this.kamar = kamar;
     }
+    
+    @Override
+    public String toString() {
+        return nama_Penyewa;
+    }
 }

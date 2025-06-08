@@ -160,7 +160,7 @@ public class LoginInterface extends javax.swing.JFrame {
             // Buka form utama sesuai role
             if ("admin".equals(pengguna.getRole())) {
                 // Buka form admin
-                new InterfaceUtama().setVisible(true);
+                new HalamanAdmin().setVisible(true);
                 dispose(); // Tutup form login
             } else {
                 // Buka form user biasa
