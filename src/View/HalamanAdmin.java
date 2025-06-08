@@ -34,6 +34,26 @@ public class HalamanAdmin extends javax.swing.JFrame {
         
         penyewaController = new PenyewaController(this);
         penyewaController.isiTable();
+
+        tblKamar.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tblKamar.getSelectedRow();
+                if (row >= 0) {
+                    kamarController.isiField(row);
+                }
+            }
+        });
+        
+        tblPenyewa.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tblPenyewa.getSelectedRow();
+                if (row >= 0) {
+                     penyewaController.isiField(row);
+                }
+            }
+        });
     }
 
     /**
@@ -63,7 +83,7 @@ public class HalamanAdmin extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtCariKamar = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JToggleButton();
-        btnReset = new javax.swing.JToggleButton();
+        btnEditKamar = new javax.swing.JToggleButton();
         btnCariKamar = new javax.swing.JToggleButton();
         txtPekerjaan = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -75,7 +95,7 @@ public class HalamanAdmin extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         txtNamaPenyewa = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        btnResetPenyewa = new javax.swing.JToggleButton();
+        btnEditPenyewa = new javax.swing.JToggleButton();
         txtNomorHP = new javax.swing.JTextField();
         txtAlamat = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -88,6 +108,10 @@ public class HalamanAdmin extends javax.swing.JFrame {
         txtCariPenyewa = new javax.swing.JTextField();
         btnCariPenyewa = new javax.swing.JToggleButton();
         btnToNextTables = new javax.swing.JButton();
+        btnDeleteKamar = new javax.swing.JToggleButton();
+        btnReset = new javax.swing.JToggleButton();
+        btnHapusPenyewa = new javax.swing.JToggleButton();
+        btnResetPenyewa = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,10 +184,10 @@ public class HalamanAdmin extends javax.swing.JFrame {
             }
         });
 
-        btnReset.setText("Reset");
-        btnReset.addActionListener(new java.awt.event.ActionListener() {
+        btnEditKamar.setText("Edit");
+        btnEditKamar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResetActionPerformed(evt);
+                btnEditKamarActionPerformed(evt);
             }
         });
 
@@ -212,10 +236,10 @@ public class HalamanAdmin extends javax.swing.JFrame {
 
         jLabel15.setText("Nama Penyewa :");
 
-        btnResetPenyewa.setText("Reset");
-        btnResetPenyewa.addActionListener(new java.awt.event.ActionListener() {
+        btnEditPenyewa.setText("Edit");
+        btnEditPenyewa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResetPenyewaActionPerformed(evt);
+                btnEditPenyewaActionPerformed(evt);
             }
         });
 
@@ -277,6 +301,34 @@ public class HalamanAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnDeleteKamar.setText("Delete");
+        btnDeleteKamar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteKamarActionPerformed(evt);
+            }
+        });
+
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
+        btnHapusPenyewa.setText("Delete");
+        btnHapusPenyewa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusPenyewaActionPerformed(evt);
+            }
+        });
+
+        btnResetPenyewa.setText("Reset");
+        btnResetPenyewa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetPenyewaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -302,7 +354,7 @@ public class HalamanAdmin extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(53, 53, 53)
-                                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(btnEditKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(txtIDKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,12 +378,16 @@ public class HalamanAdmin extends javax.swing.JFrame {
                                                         .addComponent(txtNomorKamar, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                                                         .addComponent(lsTipeKamar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                             .addComponent(jLabel3)
-                                            .addComponent(jLabel2)))
+                                            .addComponent(jLabel2))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(btnDeleteKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(53, 53, 53)
+                                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(btnSimpanPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(53, 53, 53)
-                                            .addComponent(btnResetPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(btnEditPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addGroup(layout.createSequentialGroup()
@@ -360,8 +416,12 @@ public class HalamanAdmin extends javax.swing.JFrame {
                                                         .addComponent(txtIDPenyewa)
                                                         .addComponent(txtNamaPenyewa, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                                                         .addComponent(txtNomorHP))))
-                                            .addComponent(jLabel11))))
-                                .addGap(34, 34, 34)
+                                            .addComponent(jLabel11))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(btnHapusPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(53, 53, 53)
+                                            .addComponent(btnResetPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(42, 42, 42)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel8)
@@ -397,8 +457,8 @@ public class HalamanAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(txtCariKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCariKamar))
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -418,15 +478,19 @@ public class HalamanAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(lsStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSimpan)
-                    .addComponent(btnReset))
+                            .addComponent(lsStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSimpan)
+                            .addComponent(btnEditKamar))
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDeleteKamar)
+                            .addComponent(btnReset)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -463,8 +527,12 @@ public class HalamanAdmin extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSimpanPenyewa)
+                            .addComponent(btnEditPenyewa))
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnHapusPenyewa)
                             .addComponent(btnResetPenyewa)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
 
@@ -494,9 +562,9 @@ public class HalamanAdmin extends javax.swing.JFrame {
         kamarController.reset();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        kamarController.reset();
-    }//GEN-LAST:event_btnResetActionPerformed
+    private void btnEditKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditKamarActionPerformed
+        kamarController.update();
+    }//GEN-LAST:event_btnEditKamarActionPerformed
 
     private void btnCariKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariKamarActionPerformed
         kamarController.cariKamar();
@@ -520,9 +588,9 @@ public class HalamanAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNamaPenyewaActionPerformed
 
-    private void btnResetPenyewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPenyewaActionPerformed
-        penyewaController.reset();
-    }//GEN-LAST:event_btnResetPenyewaActionPerformed
+    private void btnEditPenyewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPenyewaActionPerformed
+         penyewaController.update();
+    }//GEN-LAST:event_btnEditPenyewaActionPerformed
 
     private void txtNomorHPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomorHPActionPerformed
         // TODO add your handling code here:
@@ -548,6 +616,22 @@ public class HalamanAdmin extends javax.swing.JFrame {
         new HalamanAdmin2().setVisible(true);
         dispose(); // Tutup form 
     }//GEN-LAST:event_btnToNextTablesActionPerformed
+
+    private void btnDeleteKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteKamarActionPerformed
+        kamarController.delete();
+    }//GEN-LAST:event_btnDeleteKamarActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        kamarController.reset();
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnHapusPenyewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusPenyewaActionPerformed
+        penyewaController.delete();
+    }//GEN-LAST:event_btnHapusPenyewaActionPerformed
+
+    private void btnResetPenyewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPenyewaActionPerformed
+        penyewaController.reset();
+    }//GEN-LAST:event_btnResetPenyewaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -587,6 +671,10 @@ public class HalamanAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCariKamar;
     private javax.swing.JToggleButton btnCariPenyewa;
+    private javax.swing.JToggleButton btnDeleteKamar;
+    private javax.swing.JToggleButton btnEditKamar;
+    private javax.swing.JToggleButton btnEditPenyewa;
+    private javax.swing.JToggleButton btnHapusPenyewa;
     private javax.swing.JToggleButton btnReset;
     private javax.swing.JToggleButton btnResetPenyewa;
     private javax.swing.JToggleButton btnSimpan;

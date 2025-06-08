@@ -80,7 +80,38 @@ public class KamarController {
             JOptionPane.showMessageDialog(frame, "Nomor Kamar dan Harga tidak boleh kosong!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    // TANYA RUMPUT AJAH KALO GATAU FUNGSI INI BUAT APA :D
+    public void update() {
+        Kamar kamar = new Kamar();
+        kamar.setId_kamar(Integer.parseInt(frame.getTxtIDKamar().getText()));
+        kamar.setNomor_kamar(frame.getTxtNomorKamar().getText());
+        kamar.setTipe(frame.getLsTipeKamar().getSelectedItem().toString());
+        kamar.setHarga(Integer.parseInt(frame.getTxtHarga().getText()));
+        kamar.setStatus(frame.getLsStatus().getSelectedItem().toString());
+
+        implKamar.update(kamar);
+        JOptionPane.showMessageDialog(null, "Data kamar berhasil diupdate");
+
+        isiTable();
+    }
+
+    // INI FUGNSI BUAT STECU STECU
+    public void delete() {
+        
+        try {
+            Kamar kamar = new Kamar();
+            kamar.setId_kamar(Integer.parseInt(frame.getTxtIDKamar().getText()));
+            implKamar.delete(kamar);
+            JOptionPane.showMessageDialog(null, "Data kamar berhasil dihapus");
     
+            isiTable();            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Data kamar gagal dihapus karena kamar memiliki transaksi dengan penyewa dan transaksi!");
+        }
+
+    }
+
     public void reset() {
         frame.getTxtIDKamar().setText("");
         frame.getTxtNomorKamar().setText("");
@@ -104,5 +135,14 @@ public class KamarController {
         kamar = implKamar.getKamarByNomor(frame.getTxtCariKamar().getText());
         TabelModelKamar tmk = new TabelModelKamar(kamar);
         frame.getTableDataKamar().setModel(tmk);
+    }
+
+    // merupakan fungsi buat mouseListener tu loh yang pas diklik bakalan muncul data yang dipilih dari tabelnya cik!
+    public void isiField(int row) {
+        frame.getTxtIDKamar().setText(String.valueOf(kamar.get(row).getId_kamar()));
+        frame.getTxtNomorKamar().setText(kamar.get(row).getNomor_kamar());
+        frame.getLsTipeKamar().setSelectedItem(kamar.get(row).getTipe());
+        frame.getTxtHarga().setText(String.valueOf(kamar.get(row).getHarga()));
+        frame.getLsStatus().setSelectedItem(kamar.get(row).getStatus());
     }
 }

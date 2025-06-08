@@ -60,34 +60,20 @@ public class TransaksiController {
     }
     
     public void insert() {
-        Penyewa penyewa = (Penyewa) frame.getLsPenyewa().getSelectedItem();
-        Kamar kamar = (Kamar) frame.getLsKamar().getSelectedItem();
-        String tanggalSewa = frame.getTxtTanggalSewa().getText();
-        String durasiStr = frame.getTxtDurasi().getText();
-        String status = (String) frame.getLsStatusPembayaran().getSelectedItem();
-
-        if (penyewa == null || kamar == null || tanggalSewa.trim().isEmpty() || durasiStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Semua data harus diisi!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        Penyewa penyewa = (Penyewa) frame.getLsPenyewa().getSelectedItem(); // frame.getLsPenyewa().getSelectedItem(); ini tuh ngambil dari combo box penyewa
+        Kamar kamar = (Kamar) frame.getLsKamar().getSelectedItem(); // frame.getLsKamar().getSelectedItem(); ini tuh ngambil dari combo box kamar
         
         try {
-            int durasi = Integer.parseInt(durasiStr);
-            int hargaKamar = kamar.getHarga();
-            int total = hargaKamar;
+            Transaksi transaksi = new Transaksi();
+            transaksi.setId_transaksi(Integer.parseInt(frame.getTxtIDTransaksi().getText()));
+            transaksi.setId_penyewa(penyewa);
+            transaksi.setId_kamar(kamar);
+            transaksi.setTanggal_sewa(frame.getTxtTanggalSewa().getText());
+            transaksi.setDurasi_bulan(Integer.parseInt(frame.getTxtDurasi().getText())); // UBAH DULU JADI STRING MAKE INTEGERPARSE
+            transaksi.setTotal(Integer.parseInt(frame.getTxtTotal().getText())); // INI UBAH JUGA JADI STRING MAKE INTEGERPARSE
+            transaksi.setStatus_pembayaran(frame.getLsStatusPembayaran().getSelectedItem().toString());
             
-            // Set total harga di text field agar terlihat pengguna
-            frame.getTxtTotal().setText(String.valueOf(total));
-
-            Transaksi t = new Transaksi();
-            t.setId_penyewa(penyewa);
-            t.setId_kamar(kamar);
-            t.setTanggal_sewa(tanggalSewa);
-            t.setDurasi_bulan(durasi);
-            t.setTotal(total);
-            t.setStatus_pembayaran(status);
-            
-            implTransaksi.insert(t);
+            implTransaksi.insert(transaksi);
             JOptionPane.showMessageDialog(null, "Data transaksi berhasil disimpan!");
 
             // Tandai kamar sebagai 'Terisi' setelah transaksi berhasil
@@ -99,8 +85,44 @@ public class TransaksiController {
             loadKamarComboBox(); // Muat ulang combo box kamar untuk menghilangkan kamar yg baru terisi
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Durasi harus berupa angka!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Semua data harus diisi!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void update() {
+        Penyewa penyewa = (Penyewa) frame.getLsPenyewa().getSelectedItem();
+        Kamar kamar = (Kamar) frame.getLsKamar().getSelectedItem();
+
+        if (frame.getTxtIDTransaksi().getText().trim().isEmpty() || penyewa == null || kamar == null) {
+            JOptionPane.showMessageDialog(frame, "Silakan pilih data transaksi yang akan diubah dari tabel.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            Transaksi transaksi = new Transaksi();
+            transaksi.setId_transaksi(Integer.parseInt(frame.getTxtIDTransaksi().getText()));
+            transaksi.setId_penyewa(penyewa);
+            transaksi.setId_kamar(kamar);
+            transaksi.setTanggal_sewa(frame.getTxtTanggalSewa().getText());
+            transaksi.setDurasi_bulan(Integer.parseInt(frame.getTxtDurasi().getText()));
+            transaksi.setTotal(Integer.parseInt(frame.getTxtTotal().getText()));
+            transaksi.setStatus_pembayaran(frame.getLsStatusPembayaran().getSelectedItem().toString());
+
+            implTransaksi.update(transaksi);
+            JOptionPane.showMessageDialog(null, "Data transaksi berhasil diupdate");
+
+            isiTable();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Durasi dan Total harus berupa angka.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void delete() {
+        Transaksi transaksi = new Transaksi();
+        transaksi.setId_transaksi(Integer.parseInt(frame.getTxtIDTransaksi().getText()));
+        implTransaksi.delete(transaksi);
+        JOptionPane.showMessageDialog(null, "Data transaksi berhasil dihapus");
+        isiTable();
     }
     
     public void reset() {
@@ -111,5 +133,28 @@ public class TransaksiController {
         frame.getTxtDurasi().setText("");
         frame.getTxtTotal().setText("");
         frame.getLsStatusPembayaran().setSelectedIndex(0);
+    }
+    
+    public void isiField(int row) {
+        frame.getTxtIDTransaksi().setText(String.valueOf(transaksi.get(row).getId_transaksi()));
+        frame.getLsPenyewa().setSelectedItem(transaksi.get(row).getId_penyewa());
+        frame.getLsKamar().setSelectedItem(transaksi.get(row).getId_kamar());
+        frame.getTxtTanggalSewa().setText(transaksi.get(row).getTanggal_sewa());
+        frame.getTxtDurasi().setText(String.valueOf(transaksi.get(row).getDurasi_bulan()));
+        frame.getTxtTotal().setText(String.valueOf(transaksi.get(row).getTotal()));
+    }
+
+    public void cariTransaksi() {
+        if (!frame.getTxtCariTransaksi().getText().trim().isEmpty()) {
+            isiTableCariTransaksi();
+        } else {
+            JOptionPane.showMessageDialog(frame, "Silahkan Masukkan ID Transaksi");
+        }
+    }
+    
+    public void isiTableCariTransaksi() {
+        transaksi = implTransaksi.getTransaksiById(Integer.parseInt(frame.getTxtCariTransaksi().getText()));
+        TabelModelTransaksi tmt = new TabelModelTransaksi(transaksi);
+        frame.getTableDataTransaksi().setModel(tmt);
     }
 }

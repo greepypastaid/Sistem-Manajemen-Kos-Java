@@ -19,7 +19,7 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
 
     /**
      * Creates new form HalamanAdmin2
-     */
+     */ 
     public HalamanAdmin2() {
         initComponents();
         
@@ -32,7 +32,17 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
 
         // Atur isi combo box status pembayaran secara manual
         lsStatusBayarTransaksi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Belum Bayar", "Sudah Bayar" }));
-        }
+
+        tblTransaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tblTransaksi.getSelectedRow();
+                if (row >= 0) {
+                     transaksiController.isiField(row);
+                }
+            }
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,7 +61,7 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
         tblTransaksi = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtCariTransaksi = new javax.swing.JTextField();
+        txtCariTransaksiById = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -69,6 +79,8 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
         txtDurasiBulan = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        btnEditTransaksi = new javax.swing.JToggleButton();
+        btnDeleteTransaksi = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,9 +92,7 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
 
         jLabel7.setText("Status :");
 
-        // lsStatusBayarTransaksi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        // lsKamar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lsStatusBayarTransaksi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         tblTransaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,9 +112,9 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
 
         jLabel9.setText("Cari Transaksi");
 
-        txtCariTransaksi.addActionListener(new java.awt.event.ActionListener() {
+        txtCariTransaksiById.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCariTransaksiActionPerformed(evt);
+                txtCariTransaksiByIdActionPerformed(evt);
             }
         });
 
@@ -156,8 +166,6 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
             }
         });
 
-        // lsIDPenyewa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel10.setText("Bulan");
 
         txtDurasiBulan.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +182,20 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
 
         jLabel11.setText("Total");
 
+        btnEditTransaksi.setText("Update");
+        btnEditTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditTransaksiActionPerformed(evt);
+            }
+        });
+
+        btnDeleteTransaksi.setText("Delete");
+        btnDeleteTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteTransaksiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -181,52 +203,54 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(326, 326, 326)
-                        .addComponent(jLabel1))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtIDTransaksi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtTanggalSewa)
+                                    .addComponent(lsStatusBayarTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDurasiBulan)
+                                    .addComponent(txtTotal)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel4))
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lsKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lsIDPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(53, 53, 53)
-                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtIDTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jLabel10)
-                                            .addComponent(jLabel11))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtTanggalSewa)
-                                            .addComponent(lsStatusBayarTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtDurasiBulan)
-                                            .addComponent(txtTotal)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel4))
-                                        .addGap(37, 37, 37)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lsKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lsIDPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)))
+                                .addComponent(btnEditTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnDeleteTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(60, 60, 60)
-                                .addComponent(jLabel9)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(60, 60, 60)
+                                        .addComponent(jLabel9)))
                                 .addGap(29, 29, 29)
-                                .addComponent(txtCariTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCariTransaksiById, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCariTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1)))
+                                .addComponent(btnCariTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(btnToNextTables))
                 .addContainerGap())
         );
@@ -242,7 +266,7 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9)
-                    .addComponent(txtCariTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCariTransaksiById, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCariTransaksi))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -277,11 +301,15 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSimpan)
+                            .addComponent(btnEditTransaksi))
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDeleteTransaksi)
                             .addComponent(btnReset)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -292,9 +320,9 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTanggalSewaActionPerformed
 
-    private void txtCariTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariTransaksiActionPerformed
+    private void txtCariTransaksiByIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariTransaksiByIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCariTransaksiActionPerformed
+    }//GEN-LAST:event_txtCariTransaksiByIdActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         transaksiController.insert();
@@ -311,7 +339,7 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnCariTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariTransaksiActionPerformed
-//        transaksiController.cariKamar();
+        transaksiController.cariTransaksi();
     }//GEN-LAST:event_btnCariTransaksiActionPerformed
 
     private void btnToNextTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToNextTablesActionPerformed
@@ -326,6 +354,14 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalActionPerformed
+
+    private void btnEditTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditTransaksiActionPerformed
+        transaksiController.update();
+    }//GEN-LAST:event_btnEditTransaksiActionPerformed
+
+    private void btnDeleteTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTransaksiActionPerformed
+        transaksiController.delete();
+    }//GEN-LAST:event_btnDeleteTransaksiActionPerformed
     
     /**
      * @param args the command line arguments
@@ -365,6 +401,8 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCariTransaksi;
+    private javax.swing.JToggleButton btnDeleteTransaksi;
+    private javax.swing.JToggleButton btnEditTransaksi;
     private javax.swing.JToggleButton btnReset;
     private javax.swing.JToggleButton btnSimpan;
     private javax.swing.JButton btnToNextTables;
@@ -385,7 +423,7 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
     private javax.swing.JComboBox<Kamar> lsKamar;
     private javax.swing.JComboBox<String> lsStatusBayarTransaksi;
     private javax.swing.JTable tblTransaksi;
-    private javax.swing.JTextField txtCariTransaksi;
+    private javax.swing.JTextField txtCariTransaksiById;
     private javax.swing.JTextField txtDurasiBulan;
     private javax.swing.JTextField txtIDTransaksi;
     private javax.swing.JTextField txtTanggalSewa;
@@ -423,6 +461,10 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
     
     public JComboBox<String> getLsStatusPembayaran() {
         return lsStatusBayarTransaksi;
+    }
+
+    public javax.swing.JTextField getTxtCariTransaksi() {
+        return txtCariTransaksiById;
     }
 }
 

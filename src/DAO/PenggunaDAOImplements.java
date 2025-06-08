@@ -91,4 +91,42 @@ public abstract class PenggunaDAOImplements implements PenggunaDAO {
         
         return pengguna;
     }
+
+    public void edit(Pengguna pengguna) {
+        String sql = "UPDATE pengguna SET username = ?, password = ?, role = ? WHERE id_pengguna = ?";
+
+        try {
+            PreparedStatement statement = koneksi.prepareStatement(sql);
+            statement.setInt(1, pengguna.getId_pengguna());
+            statement.setString(2, pengguna.getUsername());
+            statement.setString(3, pengguna.getRole());
+            statement.setString(4, pengguna.getPassword());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Berhasil Update: " + rowsUpdated + " baris diperbarui");
+            } else {
+                System.out.println("Update gagal: Tidak ada baris yang diperbarui");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error saat mengupdate pengguna: " + e.getMessage());
+        }
+    }
+
+    public void delete(Pengguna pengguna) {
+        String sql = "DELETE FROM pengguna WHERE id_pengguna = ?";
+
+        PreparedStatement statement = null;
+
+        try {
+            statement = koneksi.prepareStatement(sql);
+            statement.setInt(1, pengguna.getId_pengguna());
+            statement.executeUpdate();
+            statement.close();
+
+            System.out.println("Berhasil menghapus pengguna!");
+        } catch (SQLException ex) {
+            System.out.println("Error saat menghapus pengguna: " + ex.getMessage());
+        }
+    }
 }

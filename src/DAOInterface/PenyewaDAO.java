@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface PenyewaDAO {
     public void create(Penyewa penyewa);
+    public void update(Penyewa penyewa);
+    public void delete(Penyewa penyewa);
     public List<Penyewa> readAll();
     public List<Penyewa> getPenyewaByName(String nama_penyewa);
 }

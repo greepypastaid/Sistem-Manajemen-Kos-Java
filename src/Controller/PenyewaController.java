@@ -61,6 +61,29 @@ public class PenyewaController {
         }
     }
     
+    public void update() {
+        Penyewa penyewa = new Penyewa();
+        penyewa.setId_penyewa(Integer.parseInt(frame.getTxtIDPenyewa().getText()));
+        penyewa.setNama_penyewa(frame.getTxtNamaPenyewa().getText());
+        penyewa.setNomor_hp(frame.getNomorHP().getText());
+        penyewa.setPekerjaan(frame.getPekerjaan().getText());
+        penyewa.setAlamat(frame.getAlamat().getText());
+        penyewa.setKamar(frame.getKamar().getText());
+
+        implPenyewa.update(penyewa);
+        JOptionPane.showMessageDialog(null, "Data penyewa berhasil diupdate");
+
+        isiTable();
+    }
+
+    public void delete() {
+        Penyewa penyewa = new Penyewa();
+        penyewa.setId_penyewa(Integer.parseInt(frame.getTxtIDPenyewa().getText()));
+        implPenyewa.delete(penyewa);
+        JOptionPane.showMessageDialog(null, "Data penyewa berhasil dihapus");
+        isiTable();
+    }
+
     public void reset() {
         frame.getTxtIDPenyewa().setText("");
         frame.getTxtNamaPenyewa().setText("");
@@ -85,5 +108,14 @@ public class PenyewaController {
         penyewa = implPenyewa.getPenyewaByName(frame.getTxtCariPenyewa().getText());
         TabelModelPenyewa tp = new TabelModelPenyewa(penyewa);
         frame.getTableDataPenyewa().setModel(tp);
+    }
+
+    public void isiField(int row) {
+        frame.getTxtIDPenyewa().setText(String.valueOf(penyewa.get(row).getId_penyewa()));
+        frame.getTxtNamaPenyewa().setText(penyewa.get(row).getNama_penyewa());
+        frame.getNomorHP().setText(penyewa.get(row).getNomor_hp());
+        frame.getPekerjaan().setText(penyewa.get(row).getPekerjaan());
+        frame.getAlamat().setText(penyewa.get(row).getAlamat());
+        frame.getKamar().setText(penyewa.get(row).getKamar());
     }
 }

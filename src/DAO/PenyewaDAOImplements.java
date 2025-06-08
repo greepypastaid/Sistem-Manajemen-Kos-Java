@@ -45,6 +45,47 @@ public class PenyewaDAOImplements implements PenyewaDAO {
             JOptionPane.showMessageDialog(null, "Error saat menyimpan data: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public void update (Penyewa penyewa) {
+        String sql = "UPDATE penyewa SET name = ?, no_hp = ?, pekerjaan = ?, alamat = ?, kamar = ? WHERE id_penyewa = ?";
+
+        try {
+            PreparedStatement statement = koneksi.prepareStatement(sql);
+            statement.setString(1, penyewa.getNama_penyewa());
+            statement.setString(2, penyewa.getNomor_hp());
+            statement.setString(3, penyewa.getPekerjaan());
+            statement.setString(4, penyewa.getAlamat());
+            statement.setString(5, penyewa.getKamar());
+            statement.setInt(6, penyewa.getId_penyewa());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Berhasil Update: " + rowsUpdated + " baris diperbarui");
+            } else {
+                System.out.println("Update gagal: Tidak ada baris yang diperbarui");
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println("Error saat mengupdate penyewa: " + ex.getMessage());
+        }       
+    }
+
+    public void delete(Penyewa penyewa) {
+        String sql = "DELETE FROM penyewa WHERE id_penyewa = ?";
+
+        PreparedStatement statement = null;
+
+        try {
+            statement = koneksi.prepareStatement(sql);
+            statement.setInt(1, penyewa.getId_penyewa());
+            statement.executeUpdate();
+            statement.close();
+
+            System.out.println("Berhasil menghapus penyewa!");
+        } catch (SQLException ex) {
+            System.out.println("Error saat menghapus penyewa: " + ex.getMessage());
+        }
+    }
     
     public List<Penyewa> readAll() {
         List<Penyewa> listPenyewa = new ArrayList<>();

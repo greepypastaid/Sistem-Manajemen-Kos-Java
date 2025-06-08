@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface KamarDAO {
     public void create(Kamar kamar);
+    public void update(Kamar kamar);
+    public void delete(Kamar kamar);
     public List<Kamar> readAll();
     public List<Kamar> getKamarByNomor(String nomor_kamar);
 }

@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface TransaksiDAO {
     public void insert(Transaksi transaksi);
+    public void update(Transaksi transaksi);
+    public void delete(Transaksi transaksi);
     public List<Transaksi> readAll();
     public List<Transaksi> getTransaksiById(int id_transaksi);
 }

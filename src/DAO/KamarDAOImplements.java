@@ -99,4 +99,44 @@ public class KamarDAOImplements implements KamarDAO {
         
         return listKamar;
     }
+
+    public void update(Kamar kamar) {
+        String sql = "UPDATE kamar SET nomor_kamar = ?, tipe = ?, harga = ?, status = ? WHERE id_kamar = ?";
+        
+        try {
+            PreparedStatement statement = koneksi.prepareStatement(sql);
+            statement.setString(1, kamar.getNomor_kamar());
+            statement.setString(2, kamar.getTipe());
+            statement.setInt(3, kamar.getHarga());
+            statement.setString(4, kamar.getStatus());
+            statement.setInt(5, kamar.getId_kamar());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Berhasil Update: " + rowsUpdated + " baris diperbarui");
+            } else {
+                System.out.println("Update gagal: Tidak ada baris yang diperbarui");
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println("Error saat mengupdate kamar: " + ex.getMessage());
+        }
+    }
+
+    public void delete(Kamar kamar) {
+        String sql = "DELETE FROM kamar WHERE id_kamar = ?";
+
+        PreparedStatement statement = null;
+
+        try {
+            statement = koneksi.prepareStatement(sql);
+            statement.setInt(1, kamar.getId_kamar());
+            statement.executeUpdate();
+            statement.close();
+
+            System.out.println("Berhasil menghapus kamar!");
+        } catch (SQLException ex) {
+            System.out.println("Error saat menghapus kamar: " + ex.getMessage());
+        }
+    }
 }
