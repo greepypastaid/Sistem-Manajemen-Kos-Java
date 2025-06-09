@@ -139,4 +139,18 @@ public class KamarDAOImplements implements KamarDAO {
             System.out.println("Error saat menghapus kamar: " + ex.getMessage());
         }
     }
+
+    public void updateStatus(Kamar kamar) {
+        String sql = "UPDATE kamar SET status = ? WHERE id_kamar = ?"; // Cara bacanya: Modip kamar bagian status dengan template bawaan ? dimana syaratnya id_kamar yaitu ....
+        
+        try {
+            PreparedStatement statement = koneksi.prepareStatement(sql); // INI TEMPLATE SIKIL
+            statement.setString(1, kamar.getStatus()); // NAH INI DIA YANG BIKIN BERUBAH LE KARENA DIA SET STRING GITU
+            statement.setInt(2, kamar.getId_kamar()); // INI SYARATNYA NGAMBIL DARI SINI
+            statement.executeUpdate(); // BUAT EKSEKUSI
+            statement.close(); // TUTUP BUKUNYA SQL 
+        } catch (SQLException ex) {
+            System.out.println("Error saat mengupdate status kamar: " + ex.getMessage());
+        }
+    }
 }

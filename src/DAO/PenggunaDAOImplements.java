@@ -7,16 +7,18 @@ package DAO;
 import DAOInterface.PenggunaDAO;
 import Helper.KoneksiDB;
 import Model.Pengguna;
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author gangs
  */
-public abstract class PenggunaDAOImplements implements PenggunaDAO {
+public class PenggunaDAOImplements implements PenggunaDAO {
     private Connection koneksi;
     
     public PenggunaDAOImplements() {
@@ -92,21 +94,45 @@ public abstract class PenggunaDAOImplements implements PenggunaDAO {
         return pengguna;
     }
 
-    public void edit(Pengguna pengguna) {
-        String sql = "UPDATE pengguna SET username = ?, password = ?, role = ? WHERE id_pengguna = ?";
+    @Override
+    public List<Pengguna> readAll() {
+        List<Pengguna> listPengguna = new ArrayList<>();
+        String sql = "SELECT * FROM pengguna";
+        
+        try {
+            PreparedStatement st = koneksi.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Pengguna pengguna = new Pengguna();
+                pengguna.setId_pengguna(rs.getInt("id_pengguna"));
+                pengguna.setUsername(rs.getString("username"));
+                pengguna.setPassword(rs.getString("password"));
+                pengguna.setRole(rs.getString("role"));
+                listPengguna.add(pengguna);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException ex) {
+            System.out.println("Error saat mengambil data pengguna: " + ex.getMessage());
+        }
+        
+        return listPengguna;
+    }
+
+    public void update(Pengguna pengguna) {
+        String sql = "UPDATE pengguna SET username = ?, role = ? WHERE id_pengguna = ?";
 
         try {
             PreparedStatement statement = koneksi.prepareStatement(sql);
-            statement.setInt(1, pengguna.getId_pengguna());
-            statement.setString(2, pengguna.getUsername());
-            statement.setString(3, pengguna.getRole());
-            statement.setString(4, pengguna.getPassword());
+            statement.setString(1, pengguna.getUsername());
+            statement.setString(2, pengguna.getRole());
+            statement.setInt(3, pengguna.getId_pengguna());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Berhasil Update: " + rowsUpdated + " baris diperbarui");
             } else {
-                System.out.println("Update gagal: Tidak ada baris yang diperbarui");
+                System.out.println("Update gagal: Tidak ada pengguna dengan ID tersebut.");
             }
         } catch (SQLException e) {
             System.out.println("Error saat mengupdate pengguna: " + e.getMessage());
@@ -114,13 +140,13 @@ public abstract class PenggunaDAOImplements implements PenggunaDAO {
     }
 
     public void delete(Pengguna pengguna) {
-        String sql = "DELETE FROM pengguna WHERE id_pengguna = ?";
+        String sql = "DELETE FROM pengguna WHERE username = ?";
 
         PreparedStatement statement = null;
 
         try {
             statement = koneksi.prepareStatement(sql);
-            statement.setInt(1, pengguna.getId_pengguna());
+            statement.setString(1, pengguna.getUsername());
             statement.executeUpdate();
             statement.close();
 
@@ -129,4 +155,27 @@ public abstract class PenggunaDAOImplements implements PenggunaDAO {
             System.out.println("Error saat menghapus pengguna: " + ex.getMessage());
         }
     }
+
+    public List<Pengguna> getPenggunaByName(String username) {
+        List<Pengguna> listPengguna = new ArrayList<>();
+        String sql = "SELECT * FROM pengguna WHERE username LIKE ?";
+        
+        try {
+            PreparedStatement ps = koneksi.prepareStatement(sql);
+            ps.setString(1, "%" + username + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pengguna pengguna = new Pengguna();
+                pengguna.setId_pengguna(rs.getInt("id_pengguna"));
+                pengguna.setUsername(rs.getString("username"));
+                pengguna.setPassword(rs.getString("password"));
+                pengguna.setRole(rs.getString("role"));
+                listPengguna.add(pengguna);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error saat mengambil data pengguna: " + ex.getMessage());
+        }
+
+        return listPengguna;
+    } 
 }

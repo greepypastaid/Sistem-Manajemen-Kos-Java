@@ -91,6 +91,7 @@ public class KamarController {
         kamar.setStatus(frame.getLsStatus().getSelectedItem().toString());
 
         implKamar.update(kamar);
+        implKamar.updateStatus(kamar);
         JOptionPane.showMessageDialog(null, "Data kamar berhasil diupdate");
 
         isiTable();

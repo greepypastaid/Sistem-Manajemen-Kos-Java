@@ -4,6 +4,7 @@
  */
 package View;
 
+import Controller.PenggunaController;
 import Controller.TransaksiController;
 import Model.Kamar;
 import Model.Penyewa;
@@ -16,6 +17,7 @@ import javax.swing.JComboBox;
 public class HalamanAdmin2 extends javax.swing.JFrame {
     
     private TransaksiController transaksiController;
+    private PenggunaController penggunaController;
 
     /**
      * Creates new form HalamanAdmin2
@@ -39,6 +41,19 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
                 int row = tblTransaksi.getSelectedRow();
                 if (row >= 0) {
                      transaksiController.isiField(row);
+                }
+            }
+        });
+        
+        penggunaController = new PenggunaController(this);
+        penggunaController.isiTable();
+        
+        tblPengguna.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tblPengguna.getSelectedRow();
+                if (row >= 0) {
+                     penggunaController.isiField(row);
                 }
             }
         });
@@ -73,7 +88,6 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
         btnReset = new javax.swing.JToggleButton();
         btnCariTransaksi = new javax.swing.JToggleButton();
         btnToNextTables = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         lsIDPenyewa = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         txtDurasiBulan = new javax.swing.JTextField();
@@ -81,6 +95,22 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         btnEditTransaksi = new javax.swing.JToggleButton();
         btnDeleteTransaksi = new javax.swing.JToggleButton();
+        jLabel12 = new javax.swing.JLabel();
+        ID = new javax.swing.JLabel();
+        btnResetPengguna = new javax.swing.JToggleButton();
+        btnCariPengguna = new javax.swing.JToggleButton();
+        txtIDPengguna = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        lsRolePengguna = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblPengguna = new javax.swing.JTable();
+        btnEditPengguna = new javax.swing.JToggleButton();
+        btnDeletePengguna = new javax.swing.JToggleButton();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        txtCariPenggunaByName = new javax.swing.JTextField();
+        txtUsernamePengguna = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,15 +226,131 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
             }
         });
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel12.setText("Kontrol Pengguna");
+
+        ID.setText("ID");
+
+        btnResetPengguna.setText("Reset");
+        btnResetPengguna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetPenggunaActionPerformed(evt);
+            }
+        });
+
+        btnCariPengguna.setText("Cari");
+        btnCariPengguna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariPenggunaActionPerformed(evt);
+            }
+        });
+
+        txtIDPengguna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDPenggunaActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setText("Role");
+
+        lsRolePengguna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
+        lsRolePengguna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lsRolePenggunaActionPerformed(evt);
+            }
+        });
+
+        tblPengguna.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblPengguna);
+
+        btnEditPengguna.setText("Update");
+        btnEditPengguna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditPenggunaActionPerformed(evt);
+            }
+        });
+
+        btnDeletePengguna.setText("Delete");
+        btnDeletePengguna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletePenggunaActionPerformed(evt);
+            }
+        });
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel20.setText("Tabel Data Pengguna");
+
+        jLabel21.setText("Cari Pengguna");
+
+        txtCariPenggunaByName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCariPenggunaByNameActionPerformed(evt);
+            }
+        });
+
+        txtUsernamePengguna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernamePenggunaActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("User");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(txtIDPengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel12)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(99, 99, 99)
+                                .addComponent(txtUsernamePengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnDeletePengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnResetPengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnEditPengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel16)
+                                    .addComponent(jLabel18))
+                                .addGap(75, 75, 75)
+                                .addComponent(lsRolePengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel20)
+                                .addGap(60, 60, 60)
+                                .addComponent(jLabel21)
+                                .addGap(29, 29, 29)
+                                .addComponent(txtCariPenggunaByName, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCariPengguna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnToNextTables)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtIDTransaksi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -218,7 +364,7 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
                                     .addComponent(txtTanggalSewa)
                                     .addComponent(lsStatusBayarTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtDurasiBulan)
-                                    .addComponent(txtTotal)))
+                                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -237,31 +383,31 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
                                 .addComponent(btnDeleteTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(34, 34, 34)
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addGap(60, 60, 60)
-                                        .addComponent(jLabel9)))
+                                .addComponent(jLabel8)
+                                .addGap(114, 114, 114)
+                                .addComponent(jLabel9)
                                 .addGap(29, 29, 29)
                                 .addComponent(txtCariTransaksiById, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCariTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addComponent(btnToNextTables))
+                                .addComponent(btnCariTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnToNextTables)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel8)
@@ -307,9 +453,35 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
                             .addComponent(btnDeleteTransaksi)
                             .addComponent(btnReset)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(37, 37, 37)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel21)
+                    .addComponent(txtCariPenggunaByName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCariPengguna))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtIDPengguna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ID))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtUsernamePengguna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(lsRolePengguna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addComponent(btnEditPengguna)
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDeletePengguna)
+                            .addComponent(btnResetPengguna))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -362,6 +534,38 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
     private void btnDeleteTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTransaksiActionPerformed
         transaksiController.delete();
     }//GEN-LAST:event_btnDeleteTransaksiActionPerformed
+
+    private void btnResetPenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPenggunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnResetPenggunaActionPerformed
+
+    private void btnCariPenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariPenggunaActionPerformed
+            penggunaController.cariPengguna();
+    }//GEN-LAST:event_btnCariPenggunaActionPerformed
+
+    private void txtIDPenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDPenggunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDPenggunaActionPerformed
+
+    private void btnEditPenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPenggunaActionPerformed
+            penggunaController.update();
+    }//GEN-LAST:event_btnEditPenggunaActionPerformed
+
+    private void btnDeletePenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePenggunaActionPerformed
+        penggunaController.delete();
+    }//GEN-LAST:event_btnDeletePenggunaActionPerformed
+
+    private void txtCariPenggunaByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariPenggunaByNameActionPerformed
+//        penggunaController.cariPengguna();
+    }//GEN-LAST:event_txtCariPenggunaByNameActionPerformed
+
+    private void lsRolePenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lsRolePenggunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lsRolePenggunaActionPerformed
+
+    private void txtUsernamePenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernamePenggunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernamePenggunaActionPerformed
     
     /**
      * @param args the command line arguments
@@ -400,16 +604,26 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ID;
+    private javax.swing.JToggleButton btnCariPengguna;
     private javax.swing.JToggleButton btnCariTransaksi;
+    private javax.swing.JToggleButton btnDeletePengguna;
     private javax.swing.JToggleButton btnDeleteTransaksi;
+    private javax.swing.JToggleButton btnEditPengguna;
     private javax.swing.JToggleButton btnEditTransaksi;
     private javax.swing.JToggleButton btnReset;
+    private javax.swing.JToggleButton btnResetPengguna;
     private javax.swing.JToggleButton btnSimpan;
     private javax.swing.JButton btnToNextTables;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -418,16 +632,21 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<Penyewa> lsIDPenyewa;
     private javax.swing.JComboBox<Kamar> lsKamar;
+    private javax.swing.JComboBox<String> lsRolePengguna;
     private javax.swing.JComboBox<String> lsStatusBayarTransaksi;
+    private javax.swing.JTable tblPengguna;
     private javax.swing.JTable tblTransaksi;
+    private javax.swing.JTextField txtCariPenggunaByName;
     private javax.swing.JTextField txtCariTransaksiById;
     private javax.swing.JTextField txtDurasiBulan;
+    private javax.swing.JTextField txtIDPengguna;
     private javax.swing.JTextField txtIDTransaksi;
     private javax.swing.JTextField txtTanggalSewa;
     private javax.swing.JTextField txtTotal;
+    private javax.swing.JTextField txtUsernamePengguna;
     // End of variables declaration//GEN-END:variables
 
     // buat Transaksi
@@ -459,12 +678,32 @@ public class HalamanAdmin2 extends javax.swing.JFrame {
         return tblTransaksi;
     }
     
+    public javax.swing.JTable getTableDataPengguna() {
+        return tblPengguna;
+    }
+    
     public JComboBox<String> getLsStatusPembayaran() {
         return lsStatusBayarTransaksi;
     }
 
     public javax.swing.JTextField getTxtCariTransaksi() {
         return txtCariTransaksiById;
+    }
+    
+    public javax.swing.JTextField getTxtUsernamePengguna() {
+        return txtUsernamePengguna;
+    }
+    
+    public javax.swing.JTextField getTxtIDPengguna() {
+        return txtIDPengguna;
+    }
+    
+    public JComboBox<String> getLsRolePengguna() {
+        return lsRolePengguna;
+    }
+    
+    public javax.swing.JTextField getTxtCariPengguna() {
+        return txtCariPenggunaByName;
     }
 }
 

@@ -5,6 +5,7 @@
 package CRUDMVCDAO;
 
 import Helper.KoneksiDB;
+import View.HalamanAdmin;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import javax.swing.SwingUtilities;
@@ -21,12 +22,12 @@ public class CRUDMVCDAO {
         // TODO code application logic here
         KoneksiDB.getConnection();
         
-//        // Gunakan SwingUtilities.invokeLater untuk memastikan UI dibuat di EDT
-//        SwingUtilities.invokeLater(() -> {
-//            // Buat instance FormMahasiswa dan tampilkan
-//            FormMahasiswa form = new FormMahasiswa();
-//            form.setVisible(true);
-//        });
+        // Gunakan SwingUtilities.invokeLater untuk memastikan UI dibuat di EDT
+        SwingUtilities.invokeLater(() -> {
+            // Buat instance FormMahasiswa dan tampilkan
+            HalamanAdmin form = new HalamanAdmin();
+            form.setVisible(true);
+        });
     }
     
 }

@@ -53,9 +53,9 @@ public class TransaksiController {
         frame.getLsKamar().removeAllItems();
         for (Kamar k : kamarList) {
             // Hanya tampilkan kamar yang tersedia
-            if (k.getStatus().equalsIgnoreCase("tersedia")) {
+//            if (k.getStatus().equalsIgnoreCase("tersedia")) {
                 frame.getLsKamar().addItem(k);
-            }
+//            }
         }
     }
     
@@ -65,7 +65,7 @@ public class TransaksiController {
         
         try {
             Transaksi transaksi = new Transaksi();
-            transaksi.setId_transaksi(Integer.parseInt(frame.getTxtIDTransaksi().getText()));
+            transaksi.setId_transaksi(Integer.parseInt(frame.getTxtIDTransaksi().getText())); // Ini juga ngeubah nih le
             transaksi.setId_penyewa(penyewa);
             transaksi.setId_kamar(kamar);
             transaksi.setTanggal_sewa(frame.getTxtTanggalSewa().getText());
@@ -77,8 +77,8 @@ public class TransaksiController {
             JOptionPane.showMessageDialog(null, "Data transaksi berhasil disimpan!");
 
             // Tandai kamar sebagai 'Terisi' setelah transaksi berhasil
-            kamar.setStatus("Terisi");
-//             implKamar.update(kamar); // Anda perlu menambahkan method update di KamarDAOImplements
+            kamar.setStatus("Terisi"); // nah ini dia le yang buat bagian statusnya itu tuh kok bisa berubah
+            implKamar.updateStatus(kamar); // Abis statusnya diubah, ini nih fungsi yang bikin status kamarnya bisa berubah, coba buka aja tuh di kamarDAOImplements
             
             reset();
             isiTable();
@@ -109,6 +109,11 @@ public class TransaksiController {
             transaksi.setStatus_pembayaran(frame.getLsStatusPembayaran().getSelectedItem().toString());
 
             implTransaksi.update(transaksi);
+
+            // Tandai kamar sebagai 'Terisi' setelah transaksi berhasil
+            kamar.setStatus("Tersedia"); // nah ini dia le yang buat bagian statusnya itu tuh kok bisa berubah
+            implKamar.updateStatus(kamar); // Abis statusnya diubah, ini nih fungsi yang bikin status kamarnya bisa berubah, coba buka aja tuh di kamarDAOImplements
+
             JOptionPane.showMessageDialog(null, "Data transaksi berhasil diupdate");
 
             isiTable();
